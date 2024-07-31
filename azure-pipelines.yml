@@ -14,6 +14,24 @@ strategy:
       python.version: '3.7'
 
 steps:
+
+- task: SonarQubePrepare@6
+  inputs:
+    SonarQube: 'SonarQube'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'DevOpsLearning_python-sample-vscode-flask-tutorial_7e793c73-f54d-4bca-b0ff-d94be81bd43c'
+
+# Run Code Analysis task
+- task: SonarQubeAnalyze@6
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
+
+# Publish Quality Gate Result task
+- task: SonarQubePublish@6
+  inputs:
+    pollingTimeoutSec: '300'
+
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
@@ -28,3 +46,5 @@ steps:
     pip install pytest pytest-azurepipelines
     pytest
   displayName: 'pytest'
+
+
