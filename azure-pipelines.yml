@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  name: 'BrianPC'
+  name: 'Default'
 
 steps:
 
