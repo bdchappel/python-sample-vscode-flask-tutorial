@@ -8,30 +8,27 @@ trigger:
 
 pool:
   name: 'Default'
+  Agent.Name: 'DESKTOP-934N6Q5'
 
 steps:
-
 - task: SonarQubePrepare@6
   inputs:
     SonarQube: 'SonarQube'
     scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'DevOpsLearning_python-sample-vscode-flask-tutorial_7e793c73-f54d-4bca-b0ff-d94be81bd43c'
+    configMode: 'file'
 
-# Run Code Analysis task
 - task: SonarQubeAnalyze@6
   inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
-
-# Publish Quality Gate Result task
-- task: SonarQubePublish@6
-  inputs:
-    pollingTimeoutSec: '300'
+    jdkversion: 'JAVA_HOME'
 
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
   displayName: 'Use Python $(python.version)'
+
+- task: SonarQubePublish@6
+  inputs:
+    pollingTimeoutSec: '300'
 
 - script: |
     python -m pip install --upgrade pip
@@ -42,5 +39,3 @@ steps:
     pip install pytest pytest-azurepipelines
     pytest
   displayName: 'pytest'
-
-
